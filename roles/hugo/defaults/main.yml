@@ -1,0 +1,5 @@
+---
+
+hugo_version: 0.37.1
+hugo_deb_file: "hugo_{{ hugo_version }}_Linux-64bit.deb"
+hugo_deb_url: "https://github.com/gohugoio/hugo/releases/download/v{{ hugo_version }}/{{ hugo_deb_file }}"

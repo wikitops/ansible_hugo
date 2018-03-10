@@ -1,0 +1,29 @@
+---
+
+- name: Check Hugo version
+  command: hugo version
+  register: stat_hugo_version
+  failed_when: stat_hugo_version.rc > 2
+
+- name: Install prerequisites packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - python-pip
+
+- name: Install dependencies packages
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - Pygments
+
+- name: Install Hugo from deb file
+  apt:
+    deb: "{{ hugo_deb_url }}"
+  when: stat_hugo_version.rc != 1 or hugo_version not in stat_hugo_version.stdout
+
+- name: Manage Hugo auto completion
+  command: hugo gen autocomplete
